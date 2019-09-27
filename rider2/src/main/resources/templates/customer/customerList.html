@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/default}">
+<th:block layout:fragment="customTitle">
+</th:block>
+<th:block layout:fragment="customContents">
+
+	<div class="main-height">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<p class="text-white mt-5 mb-5">
+					<h2 class="tm-block-title">대여고객 관리</h2>
+				</div>
+			</div>
+			<hr>
+			<div class="form-group">
+				<a href="/customerInsert" id="customerButton" class="btn btn-primary text-white" style="float:right;">
+					대여고객 등록
+				</a>
+			</div>
+			<div class="row tm-content-row">
+				<div class="col-12 col-12 tm-block-col">
+					<div class="tm-bg-primary-dark tm-block tm-block-h-auto-copy">
+						<form action="/searchMember" class="tm-signup-form row" method="post">
+							<div class="form-group col-12">
+							<p class="text-white">
+								<div class="form-check-inline">
+									<label class="form-check-label">
+										미반납<input type="checkbox" class="form-check-input" value="">
+									</label>
+								</div>
+								<div class="form-check-inline">
+									<label class="form-check-label">
+										연체유무<input type="checkbox" class="form-check-input" value="">
+									</label>
+								</div>
+							</div>
+							<div class="form-group col-3">
+								<select class="custom-select" name="select">
+									<option value="0">Select</option>
+									<option value="member_name">이름</option>
+								</select>
+							</div>
+							<div class="form-group col-7">
+								<input id="searchInput" name="searchInput" type="text" class="form-control validate" />
+							</div>
+							<div class="form-group col-2">
+								<button type="submit" id="searchButton" name="searchButton" class="btn btn-primary btn-block">
+									검색
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row tm-content-row">
+				<div class="col-12 tm-block-col">
+					<div class="col-lx tm-bg-primary-dark tm-block-sub tm-block-scroll">
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">이름</th>
+									<th scope="col">전화번호</th>
+									<th scope="col">대여시작일</th>
+									<th scope="col">대여종료일</th>
+									<th scope="col">대여반납일</th>
+									<th scope="col">연체유무</th>
+									<th scope="col">반납</th>
+									<th scope="col" class="text-center">상세보기</th>
+ 								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="customer : ${custoemrList}">
+									<th th:text="${customer.rentalCustomerName}"></th>
+									<td th:text="${customer.rentalCustomerPhone}"></td>
+									<td th:text="${customer.rentalCustomerStart}"></td>
+									<td th:text="${customer.rentalCustomerFinish}"></td>
+									<td th:text="${customer.rentalCustomerReturn}"></td>
+									<td th:text="${customer.rentalCustomerOverdue}"></td>
+									<td><a>반납</a></td>
+									<td class="text-center">
+										<a th:href="@{/getCustomerList(rentalCustomerCode=${customer.rentalCustomerCode})}" class="tm-product-delete-link">
+										<i class="far fa-address-card tm-product-delete-icon"></i></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</th:block>
+<th:block layout:fragment="customScript">
+</th:block>
+</html>

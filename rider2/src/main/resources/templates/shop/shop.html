@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default}">
+<th:block layout:fragment="customTitle">
+</th:block>
+<th:block layout:fragment="customContents">
+ <body>
+   	
+ 
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <p class="text-white mt-5 mb-5"><b>매장관리 > 홈</b></p>
+                </div>
+            </div>
+            
+            	
+
+				<div class="row tm-content-row">
+					<div class="col-sm-12 col-md-12 col-lg-5 col-xl-5 tm-block-col">
+						<div class="tm-bg-primary-dark tm-block-con tm-block-scroll">
+						<h2 class="tm-block-title">POS관리</h2>
+							 <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">포스트기 번호</th>
+                                    <th scope="col">포스트기 사용현황</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            	
+                             	<tr th:each="posList : ${posList}">
+									<th th:text="${posList.posNumber}"></th>
+									<th th:text="${posList.posUse}"></th>
+                                </tr>
+                            </tbody>
+						</table>
+							<div>
+							
+								<br/><br/><button class="btn btn-secondary btn-sm" type="button" onclick="location.href='posList'">POS 상세조회</button>
+								
+								<span style="float:right;"><button class="btn btn-secondary btn-sm" type="button" onclick="location.href='posInsert'">POS 등록</button></span>
+					
+							</div>
+							
+						</div>
+				
+					</div>
+						<div class="col-sm-12 col-md-12 col-lg-7 col-xl-7 tm-block-col">
+							<div class="tm-bg-primary-dark tm-block-con tm-block-scroll">
+							<h2 class="tm-block-title">매장릴레이션관리</h2>
+								 <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">매장코드</th>
+                                    <th scope="col">매장점주 아이디코드</th>
+  
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            	
+                             	<tr th:each="srList : ${relationList}">
+									<th th:text="${srList.shopCode}"></th>
+									<th th:text="${srList.memberId}"></th>
+
+                                </tr>
+                            </tbody>
+                            
+						</table>
+						<div>
+								<br/><br/>
+											<span style="float:right;"><button class="btn btn-secondary btn-sm" type="button" onclick="location.href='unitList.html' ">계약매장코드 상세조회</button></span>
+							</div>
+							</div>
+						</div>
+					<div class="col-sm-12  tm-block-col">
+						<div class="tm-bg-primary-dark tm-block-con tm-block-scroll">
+							<h2 class="tm-block-title">매장 조회</h2>
+							 	<table class="table">
+		                            <thead>
+		                                <tr>
+		                                	<th scope="col">점주 아이디</th>
+		                                    <th scope="col">등록된 매장이름</th>
+		                                    <th scope="col">매장주소</th>
+		                                    <th scope="col">매장 전화번호</th>
+		                                    
+		                                </tr>
+		                            </thead>
+		                            <tbody>	                            	
+		                             	<tr th:each="slist : ${shopList}">
+		                             		<th th:text="${slist.memberId}"></th>
+											<th th:text="${slist.shopName}"></th>
+											<th th:text="${slist.shopAddress}"></th>
+											<th th:text="${slist.shopPhone}"></th>
+		                                </tr>
+		                            </tbody>
+	                            								
+								</table>
+								<br/><br/>
+								<div>
+									
+									<button type="button" id="insertBtn"
+										onclick="location.href='shopInsert'" style="float: right"
+										class="btn btn-primary text-uppercase">매장등록</button>
+							
+								
+								</div>
+						</div>
+					</div>
+					
+      
+             
+            </div>
+        </div>
+
+ 
+
+</th:block>
+</th:block>
+<th:block layout:fragment="customScript">
+<script>
+
+
+</script>
+
+</th:block>
+</html>

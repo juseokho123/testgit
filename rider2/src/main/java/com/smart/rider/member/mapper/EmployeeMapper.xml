@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.rider.member.mapper.EmployeeMapper">
+	<insert id="employeeInsert" parameterType="com.smart.rider.member.dto.MemberDTO">
+		INSERT INTO member(
+			 member_id
+			,member_pw
+			,member_name
+			,member_level
+			,member_birth
+			,member_address
+			,member_email
+			,member_phone
+			,contract_shop_code
+			,member_insert_date
+			,member_update_date
+		)VALUES (
+			 #{memberId}
+			,#{memberPw}
+			,#{memberName}
+			,'직원'
+			,#{memberBirth}
+			,#{memberAddress}
+			,#{memberEmail}
+			,#{memberPhone}
+			,#{contractShopCode}
+			,NOW()
+			,NOW())
+	</insert>
+	<select id="employeeList" parameterType="String" resultType="com.smart.rider.member.dto.MemberDTO">
+		SELECT 
+			 member_id 			AS memberId
+			,member_pw 			AS memberPw
+			,member_name		AS memberName
+			,member_level 		AS memberLevel
+			,member_birth 		AS memberBirth
+			,member_address 	AS memberAddress
+			,member_email 		AS memberEmail
+			,member_phone 		AS memberPhone
+			,contract_shop_code	AS contractShopCode
+			,member_insert_date AS memberInsertDate
+			,member_update_date AS memberUpdateDate
+		FROM member
+		WHERE
+			contract_shop_code = #{contractShopCode}
+	</select>
+	<!-- 19.09.20작성 -->
+	<select id="getEmployeeList" parameterType="String" resultType="com.smart.rider.member.dto.MemberDTO">
+		SELECT 
+			 member_id 			AS memberId
+			,member_pw 			AS memberPw
+			,member_name		AS memberName
+			,member_level 		AS memberLevel
+			,member_birth 		AS memberBirth
+			,member_address 	AS memberAddress
+			,member_email 		AS memberEmail
+			,member_phone 		AS memberPhone
+			,contract_shop_code	AS contractShopCode
+		FROM member
+		WHERE
+			member_id 			= #{memberId}
+	</select>
+	<!-- 19.09.25작성 -->
+	<update id="employeeUpdate" parameterType="com.smart.rider.member.dto.MemberDTO">
+		UPDATE member
+		SET
+			 member_name		= #{memberName}
+			,member_birth		= #{memberBirth}
+			,member_address		= #{memberAddress}
+			,member_email		= #{memberEmail}
+			,member_phone		= #{memberPhone}
+			,member_update_date	= NOW()
+			,contract_shop_code	= #{contractShopCode}
+		WHERE
+			member_id = #{memberId}
+	</update>
+	<delete id="employeeDelete" parameterType="String">
+		DELETE 
+		FROM member
+		WHERE
+			member_id = #{memberId}
+		AND member_pw = #{memberPw}
+	</delete>
+	<!-- 19.09.26작성 -->
+	<select id="searchEmployee" parameterType="String" resultType="com.smart.rider.member.dto.MemberDTO">
+		SELECT 
+			 member_id 			AS memberId
+			,member_pw 			AS memberPw
+			,member_name		AS memberName
+			,member_level 		AS memberLevel
+			,member_birth 		AS memberBirth
+			,member_address 	AS memberAddress
+			,member_email 		AS memberEmail
+			,member_phone 		AS memberPhone
+			,contract_shop_code AS contractShopCode
+			,member_insert_date AS memberInsertDate
+			,member_update_date AS memberUpdateDate
+		FROM member
+		<if test="searchInput != null and searchInput neq ''.toString()">
+			WHERE 
+				${select} Like CONCAT('%',#{searchInput},'%')
+			AND contract_shop_code = #{contractShopCode}
+		</if>
+	</select>
+		<select id="getShopRelationCode" parameterType="String" resultType="com.smart.rider.shop.dto.SsrHapDTO">
+		SELECT DISTINCT
+			sr.contract_shop_code AS contractShopCode 
+			,s.shop_name AS shopName
+		
+		FROM shop_relation sr, shop s
+		WHERE sr.shop_code =s.shop_code AND sr.member_id =#{SID}
+	
+	</select>
+</mapper>
